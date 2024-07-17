@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "app/api/videoProxy/route.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/videoProxy",
+        "dest": "app/api/videoProxy/route.js"
+      }
+    ]
+  }
