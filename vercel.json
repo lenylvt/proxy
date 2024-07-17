@@ -1,15 +1,25 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "app/api/videoProxy/route.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/api/videoProxy",
-        "dest": "app/api/videoProxy/route.js"
-      }
-    ]
-  }
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "api/videoProxy/*.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "installCommand": "npm install --force"
+}
