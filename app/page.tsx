@@ -1,9 +1,14 @@
+// Import necessary modules
 import React from 'react';
 
-const Page = () => {
+// Define the Page component
+const Page: React.FC = () => {
   return (
     <div>
-      <h1>Proxy is running</h1>
+      <h1>API Launched!</h1>
     </div>
   );
 };
+
+// Export the Page component as the default export
+export default Page;
