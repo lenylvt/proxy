@@ -1,4 +1,3 @@
-// app/api/videoProxy/route.js
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 import { LRUCache } from 'lru-cache';
@@ -19,7 +18,7 @@ export async function GET(request) {
   }
 
   const range = request.headers.get('range');
-  const cacheKey = ${url}-${range || 'full'};
+  const cacheKey = `${url}-${range || 'full'}`;
   const cachedHeaders = cache.get(cacheKey);
 
   const headers = {
@@ -34,7 +33,7 @@ export async function GET(request) {
   }
 
   try {
-    console.time(Fetch ${url});
+    console.time(`Fetch ${url}`);
     const response = await axios.get(url, {
       headers,
       responseType: 'stream',
@@ -43,7 +42,7 @@ export async function GET(request) {
         return status >= 200 && status < 300 || status === 206 || status === 304;
       },
     });
-    console.timeEnd(Fetch ${url});
+    console.timeEnd(`Fetch ${url}`);
 
     console.log('Statut de la réponse:', response.status);
     console.log('En-têtes de la réponse:', response.headers);
@@ -77,7 +76,7 @@ export async function GET(request) {
   } catch (error) {
     console.error('Erreur dans videoProxy:', error);
 
-   // Handle timeout specifically
+    // Handle timeout specifically
     if (error.code === 'ECONNABORTED') {
       return NextResponse.json({ error: 'Timeout: La vidéo prend trop de temps à charger.' }, { status: 504 });
     }
@@ -87,6 +86,6 @@ export async function GET(request) {
       return NextResponse.json({ error: 'Requête annulée' }, { status: 499 });
     }
 
-    return NextResponse.json({ status: Une erreur est survenue : ${error.message}, error: error.toString() }, { status: 500 });
+    return NextResponse.json({ status: `Une erreur est survenue : ${error.message}`, error: error.toString() }, { status: 500 });
   }
 }
